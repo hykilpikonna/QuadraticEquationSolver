@@ -20,7 +20,7 @@ namespace QuadraticEquationSolver
 
         private void Calculate_Click(object sender, EventArgs e)
         {
-            String tempEquation = Input.Text;
+            /*String tempEquation = Input.Text;
             ArrayList equation = new ArrayList();
             String tempString = "";
             for (int i = 0; i < tempEquation.Length; i++)
@@ -93,6 +93,111 @@ namespace QuadraticEquationSolver
             {
                 Output1.Text = "Error.(arraylist length != 3)";
                 Output2.Text = "arraylist.length = " + equation.Count;
+            }*/
+
+            int A = 0, B = 0, C = 0;
+
+            if (IsNumeric(a.Text))
+            {
+                A = Int32.Parse(a.Text);
+            }
+            else
+            {
+                Output1.Text = "ERROR";
+                Output2.Text = "A is not an int";
+            }
+
+            if (IsNumeric(b.Text))
+            {
+                B = Int32.Parse(b.Text);
+            }
+            else
+            {
+                Output1.Text = "ERROR";
+                Output2.Text = "B is not an int";
+            }
+
+            if (IsNumeric(c.Text))
+            {
+                C = Int32.Parse(c.Text);
+            }
+            else
+            {
+                Output1.Text = "ERROR";
+                Output2.Text = "C is not an int";
+            }
+
+            Output1.Text = (((0 - B) + Math.Sqrt((Math.Pow(B, 2)) - (4 * A * C))) / (2 * A)).ToString();
+            Output2.Text = (((0 - B) - Math.Sqrt((Math.Pow(B, 2)) - (4 * A * C))) / (2 * A)).ToString();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void QuadraticSolver_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public static System.Boolean IsNumeric(System.Object Expression)
+        {
+            if (Expression == null || Expression is DateTime)
+                return false;
+
+            if (Expression is Int16 || Expression is Int32 || Expression is Int64 || Expression is Decimal || Expression is Single || Expression is Double || Expression is Boolean)
+                return true;
+
+            try
+            {
+                if (Expression is string)
+                    Double.Parse(Expression as string);
+                else
+                    Double.Parse(Expression.ToString());
+                return true;
+            }
+            catch { } // just dismiss errors but return false
+            return false;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private bool mouseDown;
+        private Point lastLocation;
+
+        private void QuadraticSolver_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void QuadraticSolver_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void QuadraticSolver_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
             }
         }
     }
